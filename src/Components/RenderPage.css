@@ -40,7 +40,12 @@ table {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin: 30vh;
+    margin: 10vh;
     
+}
+.table12{
+   
+    
+    margin: 1vh;
 }
 

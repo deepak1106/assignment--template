@@ -37,10 +37,9 @@ function RenderPage() {
     // }
     // FlavanoidaCal()
     function getMean(data, className) {
-        debugger
         const classData = data.filter(item => item.Alcohol === className);
         const sum = parseFloat(classData.reduce((acc, curr) => acc + curr.Flavanoids, 0));
-        let mean = parseInt((sum) / classData.length);
+        let mean = ((sum) / classData.length);
         return parseFloat(mean.toFixed(3))
     }
     function getMode(data, className) {
@@ -61,29 +60,35 @@ function RenderPage() {
             }
         });
 
-        return mode;
+        return parseFloat((mode).toFixed(3));
     }
     function getMedian(data, className) {
+        debugger
         const classData = data.filter(item => item.Alcohol === className);
         const sortedData = classData.map(item => item.Flavanoids).sort((a, b) => a - b);
         const mid = Math.floor(sortedData.length / 2);
-        return sortedData.length % 2 !== 0 ? sortedData[mid] : (sortedData[mid - 1] + sortedData[mid]) / 2;
+        return parseFloat((sortedData.length % 2 !== 0 ? sortedData[mid] : (sortedData[mid - 1] + sortedData[mid]) / 2).toFixed(3));
     }
-    function getGammaMean(data) {
-        const sum = data.reduce((acc, curr) => acc + ((curr.Ash * curr.Hue) / curr.Magnesium), 0);
-        return parseFloat(sum / data.length);
+    function getGammaMean(data, className) {
+        const classData = data.filter(item => item.Alcohol === className);
+        const sum = classData.reduce((acc, curr) => acc + ((curr.Ash * curr.Hue) / curr.Magnesium), 0);
+        return parseFloat((sum / classData.length).toFixed(3));
       }
-      function getGammaMedian(data) {
-        const sortedData = data.map(item => (item.Ash * item.Hue) / item.Magnesium).sort((a, b) => a - b);
+    function getGammaMedian(data, className) {
+        const classData = data.filter(item => item.Alcohol === className);
+        const sortedData = classData.map(item => (item.Ash * item.Hue) / item.Magnesium).sort((a, b) => a - b);
         const mid = Math.floor(sortedData.length / 2);
-        return parseFloat(sortedData.length % 2 !== 0 ? sortedData[mid] : (sortedData[mid - 1] + sortedData[mid]) / 2);
+        return parseFloat((sortedData.length % 2 !== 0 ? sortedData[mid] : (sortedData[mid - 1] + sortedData[mid]) / 2).toFixed(3));
       }
-      function getGammaMode(data) {
+      function getGammaMode(data, className) {
+        debugger
+
+        const classData = data.filter(item => item.Alcohol === className);
         const counts = {};
         let maxCount = 0;
         let mode;
         
-        data.forEach(item => {
+        classData.forEach(item => {
           const gamma = (item.Ash * item.Hue) / item.Magnesium;
           if (!counts[gamma]) {
             counts[gamma] = 0;
@@ -96,19 +101,15 @@ function RenderPage() {
           }
         });
         
-        return parseFloat(mode);
+        return parseFloat((mode).toFixed(3));
       }
-      
 
 
-    const classValue = column.map((data, i) => {
-        let val = 0
-        val += data[i]
-    })
+
 
     return (
         <div className='table-container'>
-            <table>
+            <table className='table12'>
                 <thead>
                     <tr>
                         <th>Measure</th>
@@ -122,33 +123,37 @@ function RenderPage() {
                         <th>
                             Flavanoida Mean
                         </th>
-                        <td>{getMean(wine, 1)}</td>
-                        <td>{getMean(wine, 2)}</td>
-                        <td>{getMean(wine, 3)}</td>
+                        {column.map((d, i) => {
+                            return <td>
+                                {getMean(wine, i + 1)}
+                            </td>
+                        })}
+
                     </tr>
                     <tr>
                         <th>
                             Flavanoida Medium
                         </th>
-                        <td>{getMode(wine, 1)}</td>
-                        <td>{getMode(wine, 2)}</td>
-                        <td>{getMode(wine, 3)}</td>
-
+                        {column.map((d, i) => {
+                            return <td>
+                                {getMode(wine, i + 1)}
+                            </td>
+                        })}
                     </tr>
                     <tr>
                         <th>
                             Flavanoida Mode
                         </th>
-                        <td>{getMedian(wine, 1)}</td>
-                        <td>{getMedian(wine, 2)}</td>
-                        <td>{getMedian(wine, 3)}</td>
-
-
-
+                        {column.map((d, i) => {
+                            return <td>
+                                {getMedian(wine, i + 1)}
+                            </td>
+                        })}
                     </tr>
                 </tbody>
             </table>
-            <table>
+            <table className='table12'>
+
                 <thead>
                     <tr>
                         <th>Measure</th>
@@ -162,29 +167,31 @@ function RenderPage() {
                         <th>
                             Gamma Mean
                         </th>
-                        <td>{getGammaMean(wine, 1)}</td>
-                        <td>{getGammaMean(wine, 2)}</td>
-                        <td>{getGammaMean(wine, 3)}</td>
+                        {column.map((d, i) => {
+                            return <td>
+                                {getGammaMean(wine, i + 1)}
+                            </td>
+                        })}
                     </tr>
                     <tr>
                         <th>
                             Gamma Medium
                         </th>
-                        <td>{getGammaMedian(wine, 1)}</td>
-                        <td>{getGammaMedian(wine, 2)}</td>
-                        <td>{getGammaMedian(wine, 3)}</td>
-
+                        {column.map((d, i) => {
+                            return <td>
+                                {getGammaMedian(wine, i + 1)}
+                            </td>
+                        })}
                     </tr>
                     <tr>
                         <th>
                             Gamma Mode
                         </th>
-                        <td>{getGammaMode(wine, 1)}</td>
-                        <td>{getGammaMode(wine, 2)}</td>
-                        <td>{getGammaMode(wine, 3)}</td>
-
-
-
+                        {column.map((d, i) => {
+                            return <td>
+                                {getGammaMode(wine, i + 1)}
+                            </td>
+                        })}
                     </tr>
                 </tbody>
             </table>
