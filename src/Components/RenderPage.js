@@ -18,24 +18,6 @@ function RenderPage() {
 
 
 
-    // const ThData =()=>{
-
-    //     return column.map((data)=>{
-    //         return <>
-    //        <thead>
-    //         <th key={data}>Class {data}</th>
-    //        </thead>
-
-    //         </>
-    //     })
-    // }
-    // function FlavanoidaCal(){
-    //     debugger
-    //      let mean=  []
-    //      let val=0
-
-    // }
-    // FlavanoidaCal()
     function getMean(data, className) {
         const classData = data.filter(item => item.Alcohol === className);
         const sum = parseFloat(classData.reduce((acc, curr) => acc + curr.Flavanoids, 0));
@@ -81,7 +63,7 @@ function RenderPage() {
         return parseFloat((sortedData.length % 2 !== 0 ? sortedData[mid] : (sortedData[mid - 1] + sortedData[mid]) / 2).toFixed(3));
       }
       function getGammaMode(data, className) {
-        debugger
+        
 
         const classData = data.filter(item => item.Alcohol === className);
         const counts = {};
