@@ -45,11 +45,12 @@ function RenderPage() {
         return parseFloat((mode).toFixed(3));
     }
     function getMedian(data, className) {
-        debugger
+        
+        
         const classData = data.filter(item => item.Alcohol === className);
         const sortedData = classData.map(item => item.Flavanoids).sort((a, b) => a - b);
         const mid = Math.floor(sortedData.length / 2);
-        return parseFloat((sortedData.length % 2 !== 0 ? sortedData[mid] : (sortedData[mid - 1] + sortedData[mid]) / 2).toFixed(3));
+        return (sortedData.length % 2 !== 0 ? sortedData[mid] : (sortedData[mid - 1] + sortedData[mid])/2);
     }
     function getGammaMean(data, className) {
         const classData = data.filter(item => item.Alcohol === className);
@@ -57,12 +58,15 @@ function RenderPage() {
         return parseFloat((sum / classData.length).toFixed(3));
       }
     function getGammaMedian(data, className) {
+        
         const classData = data.filter(item => item.Alcohol === className);
         const sortedData = classData.map(item => (item.Ash * item.Hue) / item.Magnesium).sort((a, b) => a - b);
         const mid = Math.floor(sortedData.length / 2);
-        return parseFloat((sortedData.length % 2 !== 0 ? sortedData[mid] : (sortedData[mid - 1] + sortedData[mid]) / 2).toFixed(3));
+        return parseFloat((sortedData.length % 2 !== 0 ? sortedData[mid] : ((sortedData[mid - 1]) + (sortedData[mid])/ 2)).toFixed(3));
       }
       function getGammaMode(data, className) {
+        debugger
+        
         
 
         const classData = data.filter(item => item.Alcohol === className);
@@ -114,11 +118,11 @@ function RenderPage() {
                     </tr>
                     <tr>
                         <th>
-                            Flavanoida Medium
+                            Flavanoida Mediam
                         </th>
                         {column.map((d, i) => {
                             return <td>
-                                {getMode(wine, i + 1)}
+                                {getMedian(wine, i + 1)}
                             </td>
                         })}
                     </tr>
@@ -128,7 +132,8 @@ function RenderPage() {
                         </th>
                         {column.map((d, i) => {
                             return <td>
-                                {getMedian(wine, i + 1)}
+                                {getMode(wine, i + 1)}
+                                
                             </td>
                         })}
                     </tr>
